@@ -31,7 +31,7 @@ class PullFromNSE {
 			printf ( "Connect failed: %s\n", $this->mysqli->connect_error );
 			exit ();
 		} else {
-			echo "Connection successful";
+// 			echo "Connection successful";
 		}
 	}
 	
@@ -106,14 +106,18 @@ class PullFromNSE {
 				$TOTTRDQTY = $record [8];
 				$time = $record [10];
 				$timestamp = strtotime ( $time );
-				$gain = $last - $prevclose;
+				$gain = round(floatval($last) - floatval($prevclose), 2);
 		
-				/*
-				 * echo "<br/>"; echo "symbol = $symbol"; echo " last = $last";
-				* echo " prevclose = $prevclose"; echo " TOTTRDQTY =
-				* $TOTTRDQTY"; echo "time = $time"; echo "timestamp =
-				* $timestamp"; echo " gain = $gain"; echo "<br/>";
-				*/
+// 				 echo "<br/>"; 
+// 				 echo " symbol = $symbol"; 
+// 				 echo " last = $last";
+// 				 echo " prevclose = $prevclose"; 
+// 				 echo " TOTTRDQTY = $TOTTRDQTY"; 
+// 				 echo " time = $time"; 
+// 				 echo " timestamp = $timestamp"; 
+// 				 echo " gain = $gain"; 
+// 				 echo "<br/>";
+				
 		
 				$selectSql = "SELECT id, SYMBOL FROM stocks.SCRIP WHERE SYMBOL like '$symbol' AND SERIES like '$series'";
 				$selectResult = $this->mysqli->query ( $selectSql );
@@ -122,8 +126,8 @@ class PullFromNSE {
 		
 				if ($selectCount == 0) {
 					// 					echo " New SCRIP Entry found. Inserting into the SCRIP TABLE.";
-					$insertSql = "INSERT INTO stocks.SCRIP (  symbol, series )
-					VALUES ( '$symbol', '$series' )";
+					$insertSql = "INSERT INTO stocks.SCRIP (  symbol, series, CREATED_TIME)
+					VALUES ( '$symbol', '$series', NOW() )";
 					$insertResult = $this->mysqli->query ( $insertSql );
 						
 					// echo "<br /> insert result = $insertResult";
@@ -157,8 +161,8 @@ class PullFromNSE {
 		
 						if ($stockCount == 0) {
 							
-						$insertSql = "INSERT INTO stocks.stocks (  last, prevclose, TOTTRDQTY, gain, timestamp, SCRIP_ID)
-						VALUES ( $last , $prevclose, $TOTTRDQTY, $gain, FROM_UNIXTIME($timestamp), $scrip_id )";
+						$insertSql = "INSERT INTO stocks.stocks (  last, prevclose, TOTTRDQTY, gain, timestamp, SCRIP_ID, CREATED_TIME)
+						VALUES ( '$last' , '$prevclose', $TOTTRDQTY, '$gain', FROM_UNIXTIME($timestamp), $scrip_id, NOW())";
 									
 								if ($this->mysqli->query ( $insertSql )) {
 								// echo "New stocks record created

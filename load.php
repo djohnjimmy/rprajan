@@ -5,6 +5,8 @@
 <title>Load Stocks from NSE</title>
 <link rel="stylesheet"
 	href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<link rel="stylesheet" href="rprajan.css">
+	
 	<script src="//code.jquery.com/jquery-1.10.2.js"></script>
 	<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 	<link rel="stylesheet" href="/resources/demos/style.css">
@@ -14,76 +16,7 @@
   });
   </script>
 <style>
-button {
-  position     : absolute;
-  left         : 440px;
-  top          : 360px;
 
-  padding      : 5px;
-
-  font         : bold .6em sans-serif;
-  border       : 2px solid #333;
-  border-radius: 5px;
-  background   : none;
-
-  cursor       : pointer;
-
--webkit-transform: rotate(-1.5deg);
-   -moz-transform: rotate(-1.5deg);
-    -ms-transform: rotate(-1.5deg);
-     -o-transform: rotate(-1.5deg);
-        transform: rotate(-1.5deg);
-}
-
-button:after {
-  content: " >>>";
-}
-
-button:hover,
-button:focus {
-  outline   : none;
-  background: #000;
-  color   : #FFF;
-}
-label {
-  font : 1.2em "typewriter", sans-serif;
-}
-@font-face{
-  font-family : "handwriting";
-
-  src : url('journal.eot');
-  src : url('journal.eot?') format('eot'),
-        url('journal.woff') format('woff'),
-        url('journal.ttf') format('truetype');
-}
-
-@font-face{
-  font-family : "typewriter";
-
-  src : url('veteran_typewriter.eot');
-  src : url('veteran_typewriter.eot?') format('eot'),
-        url('veteran_typewriter.woff') format('woff'),
-        url('veteran_typewriter.ttf') format('truetype');
-}
-
-body {
-  font  : 21px sans-serif;
-
-  padding : 2em;
-  margin  : 0;
-
-  //background : #222;
-}
-
-form {
-  position: relative;
-
-  width  : 740px;
-  height : 58px;
-  margin : 10 auto;
-
-  background: #FFF url(background.png);
-}
 </style>
 </head>
 
