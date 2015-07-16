@@ -8,7 +8,7 @@
 --      default: { start: "yesterday", end: "yesterday" }
 -- }
 -- FILTER: { 
---      column: "Symbol", 
+--      column: "SCRIP_Id", 
 --      filter: "drilldown",
 --      params: {
 --          macros: { "id": { column: "SCRIP Id" } },
@@ -19,7 +19,7 @@
 
 
 SELECT 
-	SCRIP.ID as 'SCRIP Id', 
+	SCRIP.ID as 'SCRIP_Id', 
 	SYMBOL as 'Symbol', 
 	SERIES as 'Series', 
 	LAST as 'Last', 

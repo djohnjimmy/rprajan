@@ -1,13 +1,15 @@
--- All Orders For a Customer
--- This is a drilldown report that lists all orders for a given customer
--- VARIABLE: { name: "id", display: "Customer Id" }
+--  Details of the SCIRP
+-- This is a drilldown report of the details of the SCRIP
+-- VARIABLE: { name: "id", display: "SCRIP Id" }
 
---SELECT
---    order_id as `Order Id`,
---    created_at as `Order Date`,
---    grand_total as `Grand Total`,
---    status as `Order Status`
---FROM
---    orders
---WHERE
---    customer_id = "{{ id }}"
+
+SELECT
+	ID as 'SCRIP_ID',
+	SYMBOL as 'Symbol',
+	SERIES as 'Series',
+	CREATED_TIME as 'Created Time'
+FROM
+	stocks.SCRIP
+WHERE 
+	ID = "{{ id }}"
+	
