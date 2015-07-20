@@ -24,7 +24,7 @@
 <?php
 
 //Main code
-include 'PullFromNSE.php';
+include 'pullFromNSE.php';
 
 if ($_POST ["datepicker"] != null) {
 	
