@@ -8,6 +8,7 @@ date_default_timezone_set ( 'Asia/Kolkata' );
 
 class PullFromNSE {
 	// DB Server settings
+// 	private $servername = "stocks.c9l4wumxzfjg.us-east-1.rds.amazonaws.com";
 	private $servername = "localhost";
 	private $username = "root";
 	private $password = "passw0rd";
