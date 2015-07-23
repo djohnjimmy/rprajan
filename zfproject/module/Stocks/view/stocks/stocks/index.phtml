@@ -9,8 +9,13 @@
      <a href="<?php echo $this->url('stocks', array('action'=>'add'));?>">Add new stocks</a>
  </p>
 
-
-<table class="table">
+ <p>
+ <?php echo " Found ". $this->escapeHtml($stocks->count()). " stocks matching criteria gain >6";?>
+<br/>
+ </p>
+<br/>
+ 
+ <table class="table">
 <tr>
     <th>Id</th>
    <th>Symbol</th>
@@ -18,10 +23,10 @@
     <th>Last</th>
     <th>Previous Close</th>
     <th>Total Traded Quantity</th>
-         <th>Gain</th>
-         <th>Timestamp</th>
-         <th>Scrip Id</th>
-         <th>Created Time</th>
+     <th>Gain</th>
+     <th>Timestamp</th>
+     <th>Scrip Id</th>
+     <th>Created Time</th>
 </tr>
 <?php foreach ($stocks as $stock) : ?>
 <tr>
