@@ -22,12 +22,13 @@
          <th>Timestamp</th>
          <th>Scrip Id</th>
          <th>Created Time</th>
-    <th>&nbsp;</th>
 </tr>
 <?php foreach ($stocks as $stock) : ?>
 <tr>
     <td><?php echo $this->escapeHtml($stock->id);?></td>
-    <td><?php echo $this->escapeHtml($stock->symbol);?></td>
+    <td><a href="<?php echo $this->url('stocks',
+            array('action'=>'now', 'symbol' => $stock->symbol));?>">
+            <?php echo $this->escapeHtml($stock->symbol);?></a></td>
     <td><?php echo $this->escapeHtml($stock->series);?></td>
     <td><?php echo $this->escapeHtml($stock->last);?></td>
     <td><?php echo $this->escapeHtml($stock->prevclose);?></td>
@@ -36,12 +37,6 @@
          <td><?php echo $this->escapeHtml($stock->timestamp);?></td>
          <td><?php echo $this->escapeHtml($stock->scrip_id);?></td>
          <td><?php echo $this->escapeHtml($stock->created_time);?></td>
-    <td>
-        <a href="<?php echo $this->url('stocks',
-            array('action'=>'edit', 'id' => $stock->id));?>">Edit</a>
-        <a href="<?php echo $this->url('stocks',
-            array('action'=>'delete', 'id' => $stock->id));?>">Delete</a>
-    </td>
 </tr>
 <?php endforeach; ?>
 </table>

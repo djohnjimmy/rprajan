@@ -1,0 +1,36 @@
+<?php
+ // module/Stocks/view/stocks/stocks/now.phtml:
+$title = "Details of $this->symbol as of now";
+$this->headTitle($title);
+
+?>
+ 
+ <h1><?php echo $this->escapeHtml($title); ?></h1>
+
+
+<table class="table">
+<tr>
+    <th>Id</th>
+   <th>Symbol</th>
+    <th>Close</th>
+    <th>Low</th>
+    <th>Open</th>
+    <th>Volume</th>
+     <th>High</th>
+     <th>Time</th>
+</tr>
+<?php $count = 0;?>
+<?php foreach ($this->stocks as $stock) : ?>
+<?php $count++; ?>
+<tr>
+    <td><?php echo $count;?></td>
+    <td><?php echo $this->escapeHtml($stock->symbol);?></td>
+    <td><?php echo $this->escapeHtml($stock->close);?></td>
+    <td><?php echo $this->escapeHtml($stock->low);?></td>
+    <td><?php echo $this->escapeHtml($stock->open);?></td>
+    <td><?php echo $this->escapeHtml($stock->volume);?></td>
+     <td><?php echo $this->escapeHtml($stock->high);?></td>
+     <td><?php echo $this->escapeHtml($stock->dateTime);?></td>
+</tr>
+<?php endforeach; ?>
+</table>

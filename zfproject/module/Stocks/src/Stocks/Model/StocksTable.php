@@ -27,7 +27,7 @@ class StocksTable
             $select->where->greaterThan('gain', 6);
             $select->where->between('timestamp', $yesterday, $today);
 //             $select->order('gain DSC')->limit(2);
-            $select->order('timestamp DESC')->limit(10);
+            $select->order('gain DESC');
         });
         return $resultSet;
     }

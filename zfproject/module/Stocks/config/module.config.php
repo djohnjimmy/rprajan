@@ -12,10 +12,10 @@ return array(
             'stocks' => array(
                 'type'    => 'segment',
                 'options' => array(
-                    'route'    => '/stocks[/:action][/:id]',
+                    'route'    => '/stocks[/:action][/:symbol]',
                     'constraints' => array(
                         'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
-                        'id'     => '[0-9]+',
+                        'symbol'     => '[a-zA-Z][a-zA-Z0-9_-]*',
                     ),
                     'defaults' => array(
                         'controller' => 'Stocks\Controller\Stocks',
