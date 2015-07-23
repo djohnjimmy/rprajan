@@ -2,6 +2,7 @@
 namespace Stocks\Model;
 
 use Zend\Db\TableGateway\TableGateway;
+use Zend\Db\Sql\Select;
 
 class StocksTable
 {
@@ -14,7 +15,20 @@ class StocksTable
 
     public function fetchAll()
     {
-        $resultSet = $this->tableGateway->select();
+        
+//         $resultSet = $this->tableGateway->select();
+//         $select = new Select();
+        
+        $resultSet = $this->tableGateway->select(function (Select $select) {
+
+            $yesterday = date ( 'Y-m-d ', mktime ( 0, 0, 0, date ( "m" ), date ( "d" )-17, date ( "Y" ) ) );
+            $today = date ( 'Y-m-d ', mktime ( 0, 0, 0, date ( "m" ), date ( "d" )-4, date ( "Y" ) ));
+//             $select->where->like('name', 'Brit%');
+            $select->where->greaterThan('gain', 6);
+            $select->where->between('timestamp', $yesterday, $today);
+//             $select->order('gain DSC')->limit(2);
+            $select->order('timestamp DESC')->limit(10);
+        });
         return $resultSet;
     }
 
