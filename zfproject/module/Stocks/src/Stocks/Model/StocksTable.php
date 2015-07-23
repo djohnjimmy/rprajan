@@ -23,7 +23,7 @@ class StocksTable
 
             $yesterday = date ( 'Y-m-d ', mktime ( 0, 0, 0, date ( "m" ), date ( "d" )-17, date ( "Y" ) ) );
             $today = date ( 'Y-m-d ', mktime ( 0, 0, 0, date ( "m" ), date ( "d" )-4, date ( "Y" ) ));
-            $select->join(array('p' => 'scrip'), 'p.id = stocks.scrip_id');
+            $select->join(array('p' => 'SCRIP'), 'p.id = stocks.scrip_id');
             $select->where->greaterThan('gain', 6);
             $select->where->between('timestamp', $yesterday, $today);
 //             $select->order('gain DSC')->limit(2);
