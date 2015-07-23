@@ -25,13 +25,14 @@
     <th>Total Traded Quantity</th>
      <th>Gain</th>
      <th>Timestamp</th>
-     <th>Scrip Id</th>
      <th>Created Time</th>
 </tr>
-<?php foreach ($stocks as $stock) : ?>
+<?php $count = 0;?>
+<?php foreach ($this->stocks as $stock) : ?>
+<?php $count++; ?>
 <tr>
-    <td><?php echo $this->escapeHtml($stock->id);?></td>
-    <td><a href="<?php echo $this->url('stocks',
+    <td><?php echo $count;?></td>
+<td><a href="<?php echo $this->url('stocks',
             array('action'=>'now', 'symbol' => $stock->symbol));?>">
             <?php echo $this->escapeHtml($stock->symbol);?></a></td>
     <td><?php echo $this->escapeHtml($stock->series);?></td>
@@ -40,7 +41,6 @@
     <td><?php echo $this->escapeHtml($stock->tottrdqty);?></td>
          <td><?php echo $this->escapeHtml($stock->gain);?></td>
          <td><?php echo $this->escapeHtml($stock->timestamp);?></td>
-         <td><?php echo $this->escapeHtml($stock->scrip_id);?></td>
          <td><?php echo $this->escapeHtml($stock->created_time);?></td>
 </tr>
 <?php endforeach; ?>

@@ -48,6 +48,7 @@ class PullSymbolDetailsFromYahoo {
 
 		$count =0;
 		$rowCount = 0;
+		$stocks = array();
 		
 		$Data = str_getcsv($CsvString, "\n"); //parse the rows
 		foreach($Data as &$Row) {
@@ -82,7 +83,11 @@ class PullSymbolDetailsFromYahoo {
 // 		foreach ($stocks as $key => $val) {
 // 			echo "$key = $val  : ".date('m/d/Y h:i:s A T', $key) ."<br/> ";
 // 		}
-		krsort($stocks, SORT_NUMERIC);
+
+	
+        if (!empty($stocks)) {
+            krsort($stocks, SORT_NUMERIC);
+        }		
 		
 // 		$this->print_array($stocks);
 		return $stocks;
