@@ -11,6 +11,8 @@ class Stocks
     public $timestamp;
     public $scrip_id;
     public $created_time;
+    public $symbol;
+    public $series;
     
     public function exchangeArray($data)
     {
@@ -22,5 +24,7 @@ class Stocks
         $this->timestamp = (!empty($data['timestamp'])) ? $data['timestamp'] : null;
         $this->scrip_id = (!empty($data['scrip_id'])) ? $data['scrip_id'] : null;
         $this->created_time = (!empty($data['created_time'])) ? $data['created_time'] : null;
+        $this->symbol = (!empty($data['symbol'])) ? $data['symbol'] : null;
+        $this->series = (!empty($data['symbol'])) ? $data['series'] : null;
     }
 }
