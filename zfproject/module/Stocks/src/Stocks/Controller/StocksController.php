@@ -8,7 +8,7 @@ use Stocks\Form\StocksForm;
 use Stocks\Model\PullData;
 use Stocks\Model\PullFromNSE;
 use ZfcDatagrid\Column;
-
+use ZfcDatagrid\Column\Formatter;
 class StocksController extends AbstractActionController
 {
     protected $stocksTable;
@@ -44,13 +44,10 @@ class StocksController extends AbstractActionController
     
     public function indexAction()
     {
-        return new ViewModel(array(
-            'stocks' => $this->getStocksTable()->fetchAll(),
-        ));
-    }
+//         return new ViewModel(array(
+//             'stocks' => $this->getStocksTable()->fetchAll(),
+//         ));
 
-    public function filterAction()
-    {
         $resultSet = $this->getStocksTable()->fetchAll();
         foreach ($resultSet as $result){
             $data[] = (array) $result;
@@ -66,8 +63,14 @@ class StocksController extends AbstractActionController
         $grid->addColumn($col);
     
         $col = new Column\Select('symbol');
+//         $this->getRequest()->getBasePath();
         $col->setLabel('Symbol');
+        $formatter= new Formatter\Link();
+        $formatter->setLink('./stocks/now/'.$formatter->getColumnValuePlaceholder($col));
+//         $formatter->setLink("/now/".$col->value);
+        $col->setFormatter($formatter);
         $grid->addColumn($col);
+        
     
         $col = new Column\Select('series');
         $col->setLabel('Series');
@@ -90,12 +93,12 @@ class StocksController extends AbstractActionController
         $grid->addColumn($col);
     
         $col = new Column\Select('timestamp');
-        $col->setLabel('Timestamp');
+        $col->setLabel('Date');
         $grid->addColumn($col);
     
-        $col = new Column\Select('created_time');
-        $col->setLabel('Created Time');
-        $grid->addColumn($col);
+//         $col = new Column\Select('created_time');
+//         $col->setLabel('Created Time');
+//         $grid->addColumn($col);
     
         $grid->render();
     
