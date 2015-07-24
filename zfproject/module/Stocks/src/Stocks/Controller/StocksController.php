@@ -34,9 +34,9 @@ class StocksController extends AbstractActionController
         $grid->setDataSource($data);
     
         $col = new Column\Select('displayName');
-        $col->setLabel('Name');
+        $col->setLabel('displayName');
         $grid->addColumn($col);
-    
+
         $grid->render();
     
         return $grid->getResponse();
@@ -49,6 +49,63 @@ class StocksController extends AbstractActionController
         ));
     }
 
+    public function filterAction()
+    {
+        $resultSet = $this->getStocksTable()->fetchAll();
+        foreach ($resultSet as $result){
+            $data[] = (array) $result;
+        }
+    
+        /* @var $grid \ZfcDatagrid\Datagrid */
+        $grid = $this->getServiceLocator()->get('ZfcDatagrid\Datagrid');
+        $grid->setTitle('Minimal grid');
+        $grid->setDataSource($data);
+    
+        $col = new Column\Select('id');
+        $col->setLabel('Id');
+        $grid->addColumn($col);
+    
+        $col = new Column\Select('symbol');
+        $col->setLabel('Symbol');
+        $grid->addColumn($col);
+    
+        $col = new Column\Select('series');
+        $col->setLabel('Series');
+        $grid->addColumn($col);
+    
+        $col = new Column\Select('last');
+        $col->setLabel('Last');
+        $grid->addColumn($col);
+    
+        $col = new Column\Select('prevclose');
+        $col->setLabel('Previous Close');
+        $grid->addColumn($col);
+    
+        $col = new Column\Select('tottrdqty');
+        $col->setLabel('Total Traded Quantity');
+        $grid->addColumn($col);
+    
+        $col = new Column\Select('gain');
+        $col->setLabel('Gain');
+        $grid->addColumn($col);
+    
+        $col = new Column\Select('timestamp');
+        $col->setLabel('Timestamp');
+        $grid->addColumn($col);
+    
+        $col = new Column\Select('created_time');
+        $col->setLabel('Created Time');
+        $grid->addColumn($col);
+    
+        $grid->render();
+    
+        return $grid->getResponse();
+    
+        //         return new ViewModel(array(
+        //             'stocks' => $this->getStocksTable()->fetchAll(),
+        //         ));
+    }
+    
     public function addAction()
     {
 
