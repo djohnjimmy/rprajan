@@ -14,6 +14,7 @@ class RealTimeData
     public $gain;
     public $series;
     public $dateTime;
+    public $total;
     
     
     public function exchangeArray($data)
@@ -29,5 +30,6 @@ class RealTimeData
         $this->gain = (!empty($data['gain'])) ? $data['gain'] : null;
         $this->series = (!empty($data['symbol'])) ? $data['series'] : null;
         $this->dateTime = (!empty($data['dateTime'])) ? $data['dateTime'] : null;
+        $this->total = (!empty($data['total'])) ? $data['total'] : null;
     }
 }

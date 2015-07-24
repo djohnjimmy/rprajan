@@ -17,6 +17,7 @@
         "php": ">=5.5",
         "zendframework/zendframework": "^2.5",
         "zendframework/zend-diactoros": "^1.1",
-        "thadafinser/zfc-datagrid": "dev-master"
+        "thadafinser/zfc-datagrid": "dev-master",
+        "phpoffice/phpexcel": "^1.8"
     }
 }

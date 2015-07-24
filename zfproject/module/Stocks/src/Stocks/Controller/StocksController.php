@@ -189,11 +189,66 @@ class StocksController extends AbstractActionController
         //Pull the file from Yahoo
         $stocks = $pullParser->pull($symbol);
 
-                
-        return new ViewModel(array(
-            'symbol' => $symbol,
-            'stocks' => $stocks,
-        ));
+        foreach ($stocks as $result){
+            $data[] = (array) $result;
+        }
+        
+        /* @var $grid \ZfcDatagrid\Datagrid */
+        $grid = $this->getServiceLocator()->get('ZfcDatagrid\Datagrid');
+        $grid->setTitle('Minimal grid');
+        $grid->setDataSource($data);
+        
+        $col = new Column\Select('id');
+        $col->setLabel('Id');
+        $grid->addColumn($col);
+
+        $col = new Column\Select('symbol');
+        $col->setLabel('symbol');
+        $grid->addColumn($col);
+        
+        $col = new Column\Select('dateTime');
+        $col->setLabel('Time');
+        $grid->addColumn($col);
+
+        $col = new Column\Select('total');
+        $col->setLabel('total');
+        $grid->addColumn($col);
+        
+        $col = new Column\Select('volume');
+        $col->setLabel('volume');
+        $grid->addColumn($col);
+        
+        
+        $col = new Column\Select('high');
+        $col->setLabel('high');
+        $grid->addColumn($col);
+        
+        $col = new Column\Select('close');
+        $col->setLabel('close');
+        $grid->addColumn($col);
+        
+        $col = new Column\Select('low');
+        $col->setLabel('low');
+        $grid->addColumn($col);
+        
+        $col = new Column\Select('open');
+        $col->setLabel('open');
+        $grid->addColumn($col);
+        
+        $col = new Column\Select('volume');
+        $col->setLabel('volume');
+        $grid->addColumn($col);
+
+        $grid->render();
+        
+        return $grid->getResponse();
+        
+        
+        
+//         return new ViewModel(array(
+//             'symbol' => $symbol,
+//             'stocks' => $stocks,
+//         ));
     }
     
     

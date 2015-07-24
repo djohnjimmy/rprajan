@@ -49,6 +49,7 @@ class PullSymbolDetailsFromYahoo {
 		$count =0;
 		$rowCount = 0;
 		$stocks = array();
+		$total = 0;
 		
 		$Data = str_getcsv($CsvString, "\n"); //parse the rows
 		foreach($Data as &$Row) {
@@ -59,6 +60,7 @@ class PullSymbolDetailsFromYahoo {
 				$rowCount++;
 				$Record = explode(",", $Row[0]);
 				$realTimeData = new RealTimeData();
+				$realTimeData->id = $rowCount;
 				$realTimeData->timestamp = $Record [0];
 				$realTimeData->close = $Record [1];
 				$realTimeData->high = $Record [2];
@@ -67,7 +69,10 @@ class PullSymbolDetailsFromYahoo {
 				$realTimeData->symbol = $symbol;
 // 				$realTimeData->gain = round(floatval($realTimeData->last)) - round(floatval($realTimeData->close));
 				$realTimeData->volume = $Record [5];
-				$realTimeData->dateTime = date('m/d/Y h:i:s A T', $realTimeData->timestamp);
+				$realTimeData->dateTime = date('h:i:s A', $realTimeData->timestamp);
+
+				$total = $total + $realTimeData->volume;
+				$realTimeData->total = $total;
 				
 // 				$gain = round(floatval($last) - floatval($close), 2);
 // 				$today = mktime(0, 0, 0, date("m")  , date("d"), date("Y"));
