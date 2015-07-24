@@ -143,6 +143,7 @@ class PullFromNSE
                                                         
                             $new_stock = new Stocks();
                             $new_stock->last = $last;
+                            $new_stock->gain = $gain;
                             $new_stock->prevclose = $prevclose;
                             $new_stock->tottrdqty = $TOTTRDQTY;
                             $new_stock->timestamp = date ( 'Y-m-d ', $timestamp);
