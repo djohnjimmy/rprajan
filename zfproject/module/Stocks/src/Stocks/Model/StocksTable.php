@@ -24,10 +24,10 @@ class StocksTable
             $yesterday = date ( 'Y-m-d ', mktime ( 0, 0, 0, date ( "m" ), date ( "d" )-1, date ( "Y" ) ) );
             $today = date ( 'Y-m-d ', mktime ( 0, 0, 0, date ( "m" ), date ( "d" ), date ( "Y" ) ));
             $select->join(array('p' => 'scrip'), 'p.id = stocks.scrip_id');
-//             $select->where->greaterThan('gain', 6);
+            $select->where->greaterThan('gain', 6);
             $select->where->between('timestamp', $yesterday, $today);
 //             $select->order('gain DSC')->limit(2);
-            $select->order('timestamp DESC');
+            $select->order('gain DESC');
         });
         return $resultSet;
     }
