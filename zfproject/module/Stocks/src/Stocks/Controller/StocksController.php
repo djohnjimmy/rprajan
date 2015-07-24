@@ -194,15 +194,15 @@ class StocksController extends AbstractActionController
         
         //Pull the file from Yahoo
         $stocks = $pullParser->pull($symbol);
-
+        foreach ($stocks as $result){
+            $chartData[]=$result->total;
+        }
+        
+        krsort($stocks, SORT_NUMERIC);
         foreach ($stocks as $result){
             $data[] = (array) $result;
         }
         
-        ksort($stocks, SORT_NUMERIC);
-        foreach ($stocks as $result){
-            $chartData[]=$result->total;
-        }
         
         
         /* @var $grid \ZfcDatagrid\Datagrid */

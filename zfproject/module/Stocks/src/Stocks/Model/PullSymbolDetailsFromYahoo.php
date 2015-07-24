@@ -90,9 +90,9 @@ class PullSymbolDetailsFromYahoo {
 // 		}
 
 	
-        if (!empty($stocks)) {
-            krsort($stocks, SORT_NUMERIC);
-        }		
+//         if (!empty($stocks)) {
+//             krsort($stocks, SORT_NUMERIC);
+//         }		
 		
 // 		$this->print_array($stocks);
 		return $stocks;
