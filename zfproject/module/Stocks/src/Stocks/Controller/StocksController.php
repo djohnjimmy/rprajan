@@ -7,6 +7,7 @@ use Stocks\Model\PullSymbolDetailsFromYahoo;
 use Stocks\Form\StocksForm;
 use Stocks\Model\PullData;
 use Stocks\Model\PullFromNSE;
+use ZfcDatagrid\Column;
 
 class StocksController extends AbstractActionController
 {
@@ -14,6 +15,32 @@ class StocksController extends AbstractActionController
     protected $symbol;
 
     protected $scripTable;
+    /**
+     * Simple bootstrap table
+     *
+     * @return \ZfcDatagrid\Controller\ViewModel
+     */
+    public function bootstrapAction ()
+    {
+        $data = array(
+            array ('displayName' => 'Mohammad ZeinEddin'),
+            array ('displayName' => 'John Wayne'),
+            array ('displayName' => 'Oprah Winfrey')
+        );
+    
+        /* @var $grid \ZfcDatagrid\Datagrid */
+        $grid = $this->getServiceLocator()->get('ZfcDatagrid\Datagrid');
+        $grid->setTitle('Minimal grid');
+        $grid->setDataSource($data);
+    
+        $col = new Column\Select('displayName');
+        $col->setLabel('Name');
+        $grid->addColumn($col);
+    
+        $grid->render();
+    
+        return $grid->getResponse();
+    }
     
     public function indexAction()
     {
