@@ -9,6 +9,9 @@ use Stocks\Model\PullData;
 use Stocks\Model\PullFromNSE;
 use ZfcDatagrid\Column;
 use ZfcDatagrid\Column\Formatter;
+use HighRoller\LineChart;
+use HighRoller\SeriesData;
+
 class StocksController extends AbstractActionController
 {
     protected $stocksTable;
@@ -196,6 +199,12 @@ class StocksController extends AbstractActionController
             $data[] = (array) $result;
         }
         
+        ksort($stocks, SORT_NUMERIC);
+        foreach ($stocks as $result){
+            $chartData[]=$result->total;
+        }
+        
+        
         /* @var $grid \ZfcDatagrid\Datagrid */
         $grid = $this->getServiceLocator()->get('ZfcDatagrid\Datagrid');
         $grid->setTitle('Minimal grid');
@@ -244,8 +253,21 @@ class StocksController extends AbstractActionController
 
         $grid->render();
         
-        return $grid->getResponse();
+        $linechart = new LineChart();
+        $linechart->title->text = 'Line Chart';
         
+        $series = new SeriesData();
+        $series->name = 'myData';
+        
+//         $chartData = array(5324, 7534, 6234, 7234, 8251, 10324);
+        foreach ($chartData as $value)
+            $series->addData($value);
+        
+        $linechart->addSeries($series);
+        
+        $view = $grid->getResponse();
+        $view->setVariable('highroller', $linechart);
+        return $view;
         
         
 //         return new ViewModel(array(

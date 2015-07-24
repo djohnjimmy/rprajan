@@ -2,7 +2,8 @@
  // module/Stocks/view/stocks/stocks/now.phtml:
 $title = "Details of $this->symbol as of now";
 $this->headTitle($title);
-
+$this->headScript()->appendFile($this->baseUrl().'/js/jquery.min.js')
+->appendFile($this->url().'/js/highcharts.js');
 ?>
  
  <h1><?php echo $this->escapeHtml($title); ?></h1>
