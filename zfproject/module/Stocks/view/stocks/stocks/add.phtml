@@ -1,0 +1,39 @@
+<?php
+ // module/Stocks/view/stocks/stocks/add.phtml:
+
+ $title = 'Pull and Load Stocks from NSE';
+ $this->headTitle($title);
+//  $this->headlink(array('rel' => 'stylesheet',
+//                         'href' => 'http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css'));
+//  $this->headScript()->prependFile('//code.jquery.com/jquery-1.10.2.js'); 
+//  $this->headScript()->prependFile('//code.jquery.com/ui/1.11.4/jquery-ui.js'); 
+//  $this->headScript()->prependFile('//code.jquery.com/jquery-1.10.2.js'); 
+ 
+ ?>
+ <link rel="stylesheet"
+	href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<link rel="stylesheet" href="rprajan.css">
+	
+	<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+	<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+	<link rel="stylesheet" href="/resources/demos/style.css">
+		<script>
+  $(function() {
+    $( "#datepicker" ).datepicker();
+  });
+  </script>
+  
+ <h1><?php echo $this->escapeHtml($title); ?></h1>
+ 
+ <br/>
+ <p> <?php if(!empty($this->message)) echo $this->message; ?></p>
+ <br/>
+  <br/>
+ <?php
+ $form->setAttribute('action', $this->url('stocks', array('action' => 'add')));
+ $form->prepare();
+
+ echo $this->form()->openTag($form);
+ echo $this->formRow($form->get('date'));
+ echo $this->formSubmit($form->get('submit'));
+ echo $this->form()->closeTag();

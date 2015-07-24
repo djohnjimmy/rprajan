@@ -19,5 +19,14 @@ date_default_timezone_set ( 'Asia/Kolkata' );
 	echo "\n";
 	echo " Time : $time";
 	echo "\n";
+	echo "\n";
+	echo "\n";
+	echo "\n";
+	
+	$time ="2015-07-08";
+	$fromCsv = "20-JUL-2015";
+	echo date ( 'Y-m-d ', strtotime($fromCsv));
+	
+	
 //http://localhost/~johndondapati/rprajan/php-reports/report/html/?report=mysql/drilldown/customer-orders.sql&macros[range][]=2015-06-23%2000:00:00&macros[range][]=2015-07-22%2023:59:59&macros[id]=3
 	?>

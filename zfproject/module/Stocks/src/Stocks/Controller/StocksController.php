@@ -4,11 +4,16 @@ namespace Stocks\Controller;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Stocks\Model\PullSymbolDetailsFromYahoo;
+use Stocks\Form\StocksForm;
+use Stocks\Model\PullData;
+use Stocks\Model\PullFromNSE;
 
 class StocksController extends AbstractActionController
 {
     protected $stocksTable;
     protected $symbol;
+
+    protected $scripTable;
     
     public function indexAction()
     {
@@ -19,14 +24,69 @@ class StocksController extends AbstractActionController
 
     public function addAction()
     {
+
+        $form = new StocksForm();
+        $form->get('submit')->setValue('Load');
+        
+        $request = $this->getRequest();
+        if ($request->isPost()) {
+            $pullData = new PullData();
+            $form->setInputFilter($pullData->getInputFilter());
+            $form->setData($request->getPost());
+        
+            if ($form->isValid()) {
+                $pullData->exchangeArray($form->getData());
+                
+                //
+//                 $this->getStocksTable()->saveAlbum($album);
+                 $message = " Date :". $pullData->date;
+                 
+
+                 if ($pullData->date != null) {
+                 
+//                      echo "Date picked:" . $pullData->date;
+                     $year = date ( "Y", strtotime ( $pullData->date ) );
+                     $month = strtoupper ( date ( "M", strtotime ( $pullData->date ) ) );
+                     $day = date ( "d", strtotime ( $pullData->date ) );
+                 } else {
+                     $year = date ( "Y" );
+                     $month = strtoupper ( date ( "M" ) );
+                     $day = date ( "d" );
+                 }
+                 
+                 $pullParser = new PullFromNSE();
+                 
+                 
+                 //Pull the file from NSE
+                 $pullParser->pull($day, $month, $year);
+                 
+                 //Load the file;
+                 $status = $pullParser->load("/tmp/cm$day$month${year}bhav.csv", $this->getScripTable(), $this->getStocksTable());
+                  $message .= "<br /><br /> Found ". $status['newScripCount']. " new scrips <br /><br />";
+                  $message .= " Found ". $status['newStockCount']. " new stocks <br /><br />";
+                  
+                 
+                // Redirect to list of albums
+                return array('form' => $form, 'message' => $message);
+            }
+        }
+        return array('form' => $form);
+        
     }
 
     public function editAction()
     {
     }
 
-    public function deleteAction()
+    public function doneAction()
     {
+        $symbol = $this->params()->fromRoute('symbol', '');
+        if ($symbol == '') {
+        return new ViewModel(array(
+            'symbol' => $symbol,
+            'stocks' => $stocks,
+        ));
+        }
     }
     
     public function nowAction()
@@ -44,18 +104,7 @@ class StocksController extends AbstractActionController
         
         //Pull the file from Yahoo
         $stocks = $pullParser->pull($symbol);
-//         var_dump($stocks);
-        
-        // Get the Album with the specified id.  An exception is thrown
-        // if it cannot be found, in which case go to the index page.
-//         try {
-//             $album = $this->getAlbumTable()->getAlbum($symbol);
-//         }
-//         catch (\Exception $ex) {
-//             return $this->redirect()->toRoute('album', array(
-//                 'action' => 'index'
-//             ));
-//         }
+
                 
         return new ViewModel(array(
             'symbol' => $symbol,
@@ -73,4 +122,14 @@ class StocksController extends AbstractActionController
         }
         return $this->stocksTable;
     }
+    public function getScripTable()
+    {
+        if (!$this->scripTable) {
+            $sm = $this->getServiceLocator();
+            $this->scripTable = $sm->get('Stocks\Model\ScripTable');
+        }
+        return $this->scripTable;
+    }
+    
+    
 }
