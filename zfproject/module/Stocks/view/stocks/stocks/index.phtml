@@ -13,7 +13,8 @@
  <p>
  <?php
  if(empty($stocks)){
-     echo " <h2><strong> Found no stocks for yesterday. Please click <a href=".$this->url('stocks', array('action'=>'add')). ">here </a>". " to load the latest data </strong></h2>";
+     echo " <br/> <h4><strong> Found no stocks for yesterday. <br /><br /> 
+     Please click <a href=".$this->url('stocks', array('action'=>'add')). ">here </a>". " to load the latest data from NSE into the database.</strong></h4>";
  }else
  echo " Found ". $this->escapeHtml($stocks->count()). " stocks ";?>
 <br/>
