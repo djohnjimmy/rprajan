@@ -6,13 +6,10 @@
  ?>
  <h1><?php echo $this->escapeHtml($title); ?></h1>
  <p>
+ <br />
      <a href="<?php echo $this->url('stocks', array('action'=>'add'));?>">Add new stocks</a>
  </p>
- <p align="right">
- <br />
-     <a href="<?php echo $this->url('stocks', array('action'=>'filter'));?>">Filter this data</a>
- </p>
- 
+
  <p>
  <?php
  if(empty($stocks)){
@@ -23,33 +20,4 @@
  </p>
 <br/>
  
- <table class="table">
-<tr>
-    <th>Id</th>
-   <th>Symbol</th>
-    <th>Series</th>
-    <th>Last</th>
-    <th>Previous Close</th>
-    <th>Total Traded Quantity</th>
-     <th>Gain</th>
-     <th>Timestamp</th>
-     <th>Created Time</th>
-</tr>
-<?php $count = 0;?>
-<?php foreach ($this->stocks as $stock) : ?>
-<?php $count++; ?>
-<tr>
-    <td><?php echo $count;?></td>
-<td><a href="<?php echo $this->url('stocks',
-            array('action'=>'now', 'symbol' => $stock->symbol));?>">
-            <?php echo $this->escapeHtml($stock->symbol);?></a></td>
-    <td><?php echo $this->escapeHtml($stock->series);?></td>
-    <td><?php echo $this->escapeHtml($stock->last);?></td>
-    <td><?php echo $this->escapeHtml($stock->prevclose);?></td>
-    <td><?php echo $this->escapeHtml($stock->tottrdqty);?></td>
-         <td><?php echo $this->escapeHtml($stock->gain);?></td>
-         <td><?php echo $this->escapeHtml($stock->timestamp);?></td>
-         <td><?php echo $this->escapeHtml($stock->created_time);?></td>
-</tr>
-<?php endforeach; ?>
 </table>
