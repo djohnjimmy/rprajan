@@ -20,8 +20,16 @@ class StocksTable
 //         $select = new Select();
         
         $resultSet = $this->tableGateway->select(function (Select $select) {
+            
+            if(date('N') === '7') //sunday
+                $yesterday = date ( 'Y-m-d ', mktime ( 0, 0, 0, date ( "m" ), date ( "d" )-2, date ( "Y" ) ) );
+            else if(date('N') === '1' ) {
+                $yesterday = date ( 'Y-m-d ', mktime ( 0, 0, 0, date ( "m" ), date ( "d" )-3, date ( "Y" ) ) );
+                }
+            else{
+                   $yesterday = date ( 'Y-m-d ', mktime ( 0, 0, 0, date ( "m" ), date ( "d" )-11, date ( "Y" ) ) );
+              }
 
-            $yesterday = date ( 'Y-m-d ', mktime ( 0, 0, 0, date ( "m" ), date ( "d" )-1, date ( "Y" ) ) );
             $today = date ( 'Y-m-d ', mktime ( 0, 0, 0, date ( "m" ), date ( "d" ), date ( "Y" ) ));
             $select->join(array('p' => 'scrip'), 'p.id = stocks.scrip_id');
 //             $select->where->greaterThan('gain', 6);
