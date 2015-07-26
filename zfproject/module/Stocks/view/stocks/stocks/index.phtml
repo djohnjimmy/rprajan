@@ -14,7 +14,11 @@
  </p>
  
  <p>
- <?php echo " Found ". $this->escapeHtml($stocks->count()). " stocks ";?>
+ <?php
+ if(empty($stocks)){
+     echo " <h2><strong> Found no stocks for yesterday. Please click <a href=".$this->url('stocks', array('action'=>'add')). ">here </a>". " to load the latest data </strong></h2>";
+ }else
+ echo " Found ". $this->escapeHtml($stocks->count()). " stocks ";?>
 <br/>
  </p>
 <br/>

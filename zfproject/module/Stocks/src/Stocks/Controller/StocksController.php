@@ -10,7 +10,10 @@ use Stocks\Model\PullFromNSE;
 use ZfcDatagrid\Column;
 use ZfcDatagrid\Column\Formatter;
 use HighRoller\LineChart;
+use HighRoller\BarChart;
 use HighRoller\SeriesData;
+use Ghunti\HighchartsPHP\Highchart;
+use Ghunti\HighchartsPHP\HighchartJsExpr;
 
 class StocksController extends AbstractActionController
 {
@@ -50,12 +53,22 @@ class StocksController extends AbstractActionController
 //         return new ViewModel(array(
 //             'stocks' => $this->getStocksTable()->fetchAll(),
 //         ));
-
+//         }
+        
+//         public function testAction()
+//         {
+        
         $resultSet = $this->getStocksTable()->fetchAll();
+//         var_dump($resultSet);
         foreach ($resultSet as $result){
             $data[] = (array) $result;
         }
-    
+        if(empty($data)){
+            return new ViewModel(array(
+                'message' => "No data to fetch from yesterday",
+                'stocks' => array(),
+            ));        
+        }
         /* @var $grid \ZfcDatagrid\Datagrid */
         $grid = $this->getServiceLocator()->get('ZfcDatagrid\Datagrid');
         $grid->setTitle('Minimal grid');
@@ -98,6 +111,7 @@ class StocksController extends AbstractActionController
         $col = new Column\Select('timestamp');
         $col->setLabel('Date');
         $grid->addColumn($col);
+        
     
 //         $col = new Column\Select('created_time');
 //         $col->setLabel('Created Time');
@@ -195,7 +209,7 @@ class StocksController extends AbstractActionController
         //Pull the file from Yahoo
         $stocks = $pullParser->pull($symbol);
         foreach ($stocks as $result){
-            $chartData[]=$result->total;
+            $chartData[$result->dateTime ]=$result->total;
         }
         
         krsort($stocks, SORT_NUMERIC);
@@ -207,7 +221,7 @@ class StocksController extends AbstractActionController
         
         /* @var $grid \ZfcDatagrid\Datagrid */
         $grid = $this->getServiceLocator()->get('ZfcDatagrid\Datagrid');
-        $grid->setTitle('Minimal grid');
+        $grid->setTitle('Trend grid');
         $grid->setDataSource($data);
         
         $col = new Column\Select('id');
@@ -253,11 +267,11 @@ class StocksController extends AbstractActionController
 
         $grid->render();
         
-        $linechart = new LineChart();
-        $linechart->title->text = 'Line Chart';
+        $linechart = new BarChart();
+        $linechart->title->text = "Total trend for $symbol";
         
         $series = new SeriesData();
-        $series->name = 'myData';
+        $series->name = 'trend analysis';
         
 //         $chartData = array(5324, 7534, 6234, 7234, 8251, 10324);
         foreach ($chartData as $value)
@@ -267,6 +281,174 @@ class StocksController extends AbstractActionController
         
         $view = $grid->getResponse();
         $view->setVariable('highroller', $linechart);
+        
+        //HIGHCHARTS
+        
+        $chart = new Highchart();
+        
+        $chart->chart->renderTo = "container";
+        $chart->chart->type = "area";
+        $chart->title->text = "US and USSR nuclear stockpiles";
+        $chart->subtitle->text = "Source: <a href=\"http://thebulletin.metapress.com/content/c4120650912x74k7/fulltext.pdf\">thebulletin.metapress.com</a>";
+        $chart->xAxis->labels->formatter = new HighchartJsExpr("function() { return this.value;}");
+        $chart->yAxis->title->text = "Nuclear weapon states";
+        $chart->yAxis->labels->formatter = new HighchartJsExpr("function() { return this.value / 1000 +'k';}");
+        $chart->tooltip->formatter = new HighchartJsExpr(
+            "function() {
+                              return this.series.name +' produced <b>'+
+                              Highcharts.numberFormat(this.y, 0) +'</b><br/>warheads in '+ this.x;}");
+        $chart->plotOptions->area->pointStart = 1940;
+        $chart->plotOptions->area->marker->enabled = false;
+        $chart->plotOptions->area->marker->symbol = "circle";
+        $chart->plotOptions->area->marker->radius = 2;
+        $chart->plotOptions->area->marker->states->hover->enabled = true;
+        
+        $chart->series[] = array(
+            'name' => 'USA',
+            'data' => array(
+                null,
+                null,
+                null,
+                null,
+                null,
+                6,
+                11,
+                32,
+                110,
+                235,
+                369,
+                640,
+                1005,
+                1436,
+                2063,
+                3057,
+                4618,
+                6444,
+                9822,
+                15468,
+                20434,
+                24126,
+                27387,
+                29459,
+                31056,
+                31982,
+                32040,
+                31233,
+                29224,
+                27342,
+                26662,
+                26956,
+                27912,
+                28999,
+                28965,
+                27826,
+                25579,
+                25722,
+                24826,
+                24605,
+                24304,
+                23464,
+                23708,
+                24099,
+                24357,
+                24237,
+                24401,
+                24344,
+                23586,
+                22380,
+                21004,
+                17287,
+                14747,
+                13076,
+                12555,
+                12144,
+                11009,
+                10950,
+                10871,
+                10824,
+                10577,
+                10527,
+                10475,
+                10421,
+                10358,
+                10295,
+                10104
+            )
+        );
+        
+        $chart->series[] = array(
+            'name' => 'USSR/Russia',
+            'data' => array(
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                5,
+                25,
+                50,
+                120,
+                150,
+                200,
+                426,
+                660,
+                869,
+                1060,
+                1605,
+                2471,
+                3322,
+                4238,
+                5221,
+                6129,
+                7089,
+                8339,
+                9399,
+                10538,
+                11643,
+                13092,
+                14478,
+                15915,
+                17385,
+                19055,
+                21205,
+                23044,
+                25393,
+                27935,
+                30062,
+                32049,
+                33952,
+                35804,
+                37431,
+                39197,
+                45000,
+                43000,
+                41000,
+                39000,
+                37000,
+                35000,
+                33000,
+                31000,
+                29000,
+                27000,
+                25000,
+                24000,
+                23000,
+                22000,
+                21000,
+                20000,
+                19000,
+                18000,
+                18000,
+                17000,
+                16000
+            )
+        );
+        $view->setVariable("chart", $chart);
         return $view;
         
         
