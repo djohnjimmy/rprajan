@@ -10,10 +10,8 @@ use Stocks\Model\PullFromNSE;
 use ZfcDatagrid\Column;
 use ZfcDatagrid\Column\Formatter;
 use HighRoller\LineChart;
-use HighRoller\BarChart;
+// use HighRoller\BarChart;
 use HighRoller\SeriesData;
-use Ghunti\HighchartsPHP\Highchart;
-use Ghunti\HighchartsPHP\HighchartJsExpr;
 
 class StocksController extends AbstractActionController
 {
@@ -267,7 +265,7 @@ class StocksController extends AbstractActionController
 
         $grid->render();
         
-        $linechart = new BarChart();
+        $linechart = new LineChart();
         $linechart->title->text = "Total trend for $symbol";
         
         $series = new SeriesData();
